@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="wave-bg">
+  <header>
+    <div class="navbar">
+      <div class="logo"><a href="/">Aurorafolio</a></div>
+      <div class="nav-links">
+        <ul>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="form-card">
+      <h2>Create Your Portfolio</h2>
+      <form id="portfolioForm" action="/portfolio" method="POST" enctype="multipart/form-data">
+        <div class="two-column">
+          <fieldset>
+            <legend>Personal Information</legend>
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required>
+            <label for="contact">Contact Information</label>
+            <input type="text" id="contact" name="contact" required>
+            <label for="photo">Upload Photo (.jpg/.png)</label>
+            <input type="file" id="photo" name="photo" accept=".jpg, .jpeg, .png">
+            <label for="bio">Short Bio</label>
+            <textarea id="bio" name="bio" rows="3" required></textarea>
+          </fieldset>
+          <fieldset>
+            <legend>Skills</legend>
+            <label for="softSkills">Soft Skills (comma separated)</label>
+            <input type="text" id="softSkills" name="softSkills" required>
+            <label for="technicalSkills">Technical Skills (comma separated)</label>
+            <input type="text" id="technicalSkills" name="technicalSkills" required>
+          </fieldset>
+        </div>
+        <div class="two-column">
+          <fieldset>
+            <legend>Academic Background (Optional)</legend>
+            <label for="institute">Institute</label>
+            <input type="text" id="institute" name="institute">
+            <label for="degree">Degree</label>
+            <input type="text" id="degree" name="degree">
+            <label for="year">Year</label>
+            <input type="number" id="year" name="year">
+            <label for="grade">Grade</label>
+            <input type="text" id="grade" name="grade">
+          </fieldset>
+          <fieldset>
+            <legend>Work Experience</legend>
+            <label for="company">Company Name</label>
+            <input type="text" id="company" name="company" required>
+            <label for="duration">Job Duration</label>
+            <input type="text" id="duration" name="duration" required>
+            <label for="responsibilities">Job Responsibilities</label>
+            <textarea id="responsibilities" name="responsibilities" rows="3" required></textarea>
+          </fieldset>
+        </div>
+        <fieldset>
+          <legend>Projects/Publications (Optional)</legend>
+          <label for="projects">Projects/Publications</label>
+          <textarea id="projects" name="projects" rows="3"></textarea>
+        </fieldset>
+        <div class="buttons">
+          <button type="button" id="previewBtn">Preview</button>
+          <button><a style="text-decoration: none; color: aliceblue;" href="index.html">HOME</a></button>
+          <button type="submit" id="generatePdfBtn">Generate PDF</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="previewModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <iframe id="pdfFrame" width="100%" height="600px" style="border:none;"></iframe>
+    </div>
+  </div>
+  <script src="./js/portfolio-preview.js"></script>
+</body>
+</html>

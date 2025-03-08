@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AuroraFolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="wave-bg">
+  <header>
+    <div class="navbar">
+      <div class="logo">
+        <a href="/">AuroraFolio</a>
+      </div>
+      <nav class="nav-links">
+        <ul id="nav-menu">
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Create a Stunning Online Portfolio</h1>
+      <p>Showcase your creativity, work, and achievements with our easy-to-use, free portfolio builder.</p>
+      <a href="/create-account" class="cta-button">Get Started</a>
+      <p class="sub-text">No credit card required. 100% free.</p>
+    </div>
+  </section>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/currentUser');
+        const data = await response.json();
+        const navMenu = document.getElementById('nav-menu');
+        navMenu.innerHTML = '';
+        if (data.loggedIn) {
+          navMenu.innerHTML = '<li><a href="/logout">Logout</a></li>';
+        } else {
+          navMenu.innerHTML = '<li><a href="/login">Login</a></li>';
+        }
+      } catch (err) {
+        console.error('Error fetching currentUser:', err);
+      }
+    });
+  </script>
+
+</body>
+</html>
