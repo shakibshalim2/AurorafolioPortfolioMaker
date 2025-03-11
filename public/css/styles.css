@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   font-family: 'Poppins', Arial, sans-serif;
   color: #333;
   scroll-behavior: smooth;
@@ -19,6 +20,7 @@ body.wave-bg {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
+}
 
 body.wave-bg::after {
   content: "";
@@ -27,8 +29,7 @@ body.wave-bg::after {
   left: 0;
   width: 100%;
   height: 180px;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,192L48,186.7C96,181,192,171,288,170.7C384,171,480,181,576,186.7C672,192,768,192,864,170.7C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E")
-    no-repeat center bottom;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,192L48,186.7C96,181,192,171,288,170.7C384,171,480,181,576,186.7C672,192,768,192,864,170.7C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat center bottom;
   background-size: cover;
   z-index: -1;
 }
@@ -36,7 +37,7 @@ body.wave-bg::after {
 header {
   background: #fff;
   border-bottom: 1px solid #eee;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .navbar {
@@ -140,7 +141,7 @@ header {
   background-color: #fafafa;
   padding: 20px;
   border-radius: 6px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -202,7 +203,6 @@ header {
   text-decoration: underline;
 }
 
-
 .form-group {
   width: 100%;
   margin-bottom: 15px;
@@ -252,21 +252,15 @@ header {
   margin: 40px auto;
   background-color: #fff;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-card {
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   padding: 30px;
   text-align: center;
-}
-
-.form-card h2 {
-  margin-bottom: 20px;
-  font-weight: 600;
-  color: #333;
 }
 
 .two-column {
@@ -297,8 +291,7 @@ legend {
 fieldset label {
   display: block;
   font-size: 0.9rem;
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin: 10px 0 5px;
   color: #555;
   font-weight: 500;
 }
@@ -320,7 +313,7 @@ input:focus,
 textarea:focus {
   outline: none;
   border-color: #8EC5FC;
-  box-shadow: 0 0 0 2px rgba(142,197,252,0.3);
+  box-shadow: 0 0 0 2px rgba(142, 197, 252, 0.3);
   transition: 0.2s;
 }
 
@@ -352,167 +345,190 @@ textarea:focus {
   }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  font-family: 'Poppins', Arial, sans-serif;
-  color: #333;
-  scroll-behavior: smooth;
-}
-
-body.wave-bg {
-  background: linear-gradient(135deg, #8EC5FC 0%, #E0C3FC 100%);
-  position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body.wave-bg::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 180px;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,192L48,186.7C96,181,192,171,288,170.7C384,171,480,181,576,186.7C672,192,768,192,864,170.7C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E")
-    no-repeat center bottom;
-  background-size: cover;
-  z-index: -1;
-}
-
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 40px auto;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.form-card {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-}
-
-.form-card h2 {
-  margin-bottom: 20px;
-  font-weight: 600;
-  color: #333;
-}
-
-.two-column {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.two-column fieldset {
-  flex: 1;
-  min-width: 300px;
-}
-
-fieldset {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  padding: 15px;
-}
-
-legend {
-  font-weight: 600;
-  padding: 0 5px;
-  color: #555;
-}
-
-label {
-  display: block;
-  font-size: 0.9rem;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #555;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="file"],
-textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 0.95rem;
-  resize: vertical;
-}
-
-input:focus,
-textarea:focus {
-  outline: none;
-  border-color: #8EC5FC;
-  box-shadow: 0 0 0 2px rgba(142,197,252,0.3);
-  transition: 0.2s;
-}
-
 .buttons {
   display: flex;
   gap: 10px;
-  justify-content: center;
   margin-top: 20px;
 }
 
-.buttons button {
-  padding: 12px 20px;
-  background-color: #007aff;
-  color: #fff;
+.plus-btn {
+  background-color: #007BFF;
   border: none;
+  color: #fff;
+  padding: 0.5rem 0.8rem;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 1rem;
+  margin-left: 0.5rem;
 }
 
-.buttons button:hover {
-  background-color: #005ec2;
+.plus-btn:hover {
+  background-color: #0069d9;
+}
+
+.skills-input-container,
+.institute-input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.skills-input-container input,
+.institute-input-container input {
+  flex: 1;
+}
+
+#softSkillsList,
+#techSkillsList,
+#instituteList {
+  list-style-type: none;
+  margin: 10px 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#softSkillsList li,
+#techSkillsList li,
+#instituteList li {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+}
+
+#softSkillsList li button,
+#techSkillsList li button,
+#instituteList li button {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 0.9rem;
 }
 
 .modal {
-  display: none; 
+  display: none;
   position: fixed;
   z-index: 999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
   background-color: #fff;
-  margin: 5% auto;
+  margin: 50px auto;
   padding: 20px;
+  border-radius: 6px;
   width: 80%;
   max-width: 900px;
-  border-radius: 6px;
   position: relative;
 }
 
 .close {
   color: #aaa;
-  font-size: 28px;
+  float: right;
+  font-size: 1.5rem;
   font-weight: bold;
-  position: absolute;
-  right: 20px;
-  top: 15px;
   cursor: pointer;
 }
+
 .close:hover {
   color: #000;
 }
+
+@media (max-width: 768px) {
+  .two-column {
+    flex-direction: column;
+  }
+  .buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .buttons button,
+  .buttons a {
+    width: 100%;
+    text-align: center;
+  }
+  .modal-content {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  fieldset {
+    margin-bottom: 15px;
+  }
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    font-size: 0.95rem;
+  }
+}
+
+.skills-input-container,
+.institute-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.skills-input-container input,
+.institute-input-container input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.plus-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.3s ease;
+}
+
+.plus-btn:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .skills-input-container,
+  .institute-input-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .plus-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+#addInstituteBtn {
+  margin-bottom: 0.9rem;
+}
+
+#addTechSkillBtn {
+  margin-bottom: 0.9rem;
+}
+
+#addSoftSkillBtn {
+  margin-bottom: 0.9rem;
 }
