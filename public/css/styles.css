@@ -532,3 +532,57 @@ textarea:focus {
 #addSoftSkillBtn {
   margin-bottom: 0.9rem;
 }
+
+label[for="email"] {
+  position: relative;
+}
+
+label[for="email"]::after {
+  content: "*";
+  color: #ff4d4d;
+  margin-left: 4px;
+}
+
+label[for="phone"] {
+  position: relative;
+}
+
+label[for="phone"]::after {
+  content: "(optional)";
+  color: #666;
+  font-size: 0.8em;
+  margin-left: 6px;
+  font-weight: normal;
+}
+
+input[type="email"],
+input[type="tel"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="tel"]:focus {
+  outline: none;
+  border-color: #8EC5FC;
+  box-shadow: 0 0 0 2px rgba(142, 197, 252, 0.3);
+}
+
+
+input[type="tel"] {
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  label[for="email"]::after,
+  label[for="phone"]::after {
+    position: static;
+    display: inline-block;
+    margin-left: 4px;
+  }
+}
