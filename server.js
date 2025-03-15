@@ -23,7 +23,8 @@ const User = mongoose.model('User', userSchema);
 const portfolioSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   fullName: String,
-  contact: String,
+  email: String,
+  phone: String,
   bio: String,
   softSkills: [String],
   technicalSkills: [String],
@@ -102,10 +103,12 @@ app.get('/currentUser', (req, res) => {
 app.post('/preview', upload.single('photo'), async (req, res) => {
   if (!req.session.userId) return res.redirect('/login');
   try {
-    const { fullName, contact, bio, softSkills, technicalSkills, institute, degree, year, grade, company, duration, responsibilities, projects } = req.body;
+    const { fullName, email,phone, bio, softSkills, technicalSkills, institutes, degree, year, grade, company, duration, responsibilities, projects } = req.body;
     const softSkillsArray = softSkills ? softSkills.split(',').map(s => s.trim()) : [];
     const technicalSkillsArray = technicalSkills ? technicalSkills.split(',').map(s => s.trim()) : [];
     const doc = new PDFDocument({ size: 'A4', margins: { top: 50, bottom: 50, left: 50, right: 50 } });
+    const institutesArray = institutes ? institutes.split(',').map(s => s.trim()) : [];
+
     const chunks = [];
     doc.on('data', chunk => chunks.push(chunk));
     doc.on('end', () => {
@@ -116,7 +119,10 @@ app.post('/preview', upload.single('photo'), async (req, res) => {
     doc.fontSize(20).text('Portfolio Preview', { align: 'center' });
     doc.moveDown();
     doc.fontSize(14).text(`Full Name: ${fullName || ''}`);
-    doc.text(`Contact: ${contact || ''}`);
+    doc.text(`Email: ${email || ''}`);
+    if(phone.length>0){
+      doc.text(`Phone: ${phone || ''}`);
+    }
     doc.text(`Bio: ${bio || ''}`);
     doc.moveDown();
     if (req.file) {
@@ -134,12 +140,18 @@ app.post('/preview', upload.single('photo'), async (req, res) => {
     doc.text(`Soft Skills: ${softSkillsArray.join(', ')}`);
     doc.text(`Technical Skills: ${technicalSkillsArray.join(', ')}`);
     doc.moveDown();
-    if (institute || degree || year || grade) {
-      doc.text('Academic Background:', { underline: true });
-      doc.text(`Institute: ${institute || ''}`);
-      doc.text(`Degree: ${degree || ''}`);
-      doc.text(`Year: ${year || ''}`);
-      doc.text(`Grade: ${grade || ''}`);
+    if (institutesArray.length > 0 || degree || year || grade) {
+      doc.fontSize(16).fillColor('#007AFF').text('Academic Background', { underline: true });
+      doc.moveDown(0.5);
+      
+      if (institutesArray.length > 0) {
+        doc.fontSize(12).fillColor('#333')
+           .text(`Institutes: ${institutesArray.join(', ')}`);
+      }
+      
+      if (degree) doc.text(`Degree: ${degree}`);
+      if (year) doc.text(`Year: ${year}`);
+      if (grade) doc.text(`Grade: ${grade}`);
       doc.moveDown();
     }
     doc.text('Work Experience:', { underline: true });
@@ -162,17 +174,20 @@ app.post('/preview', upload.single('photo'), async (req, res) => {
 app.post('/portfolio', upload.single('photo'), async (req, res) => {
   if (!req.session.userId) return res.redirect('/login');
   try {
-    const { fullName, contact, bio, softSkills, technicalSkills, institute, degree, year, grade, company, duration, responsibilities, projects } = req.body;
+    const { fullName, email,phone, bio, softSkills, technicalSkills, institutes, degree, year, grade, company, duration, responsibilities, projects } = req.body;
     const softSkillsArray = softSkills.split(',').map(s => s.trim());
     const technicalSkillsArray = technicalSkills.split(',').map(s => s.trim());
+    const institutesArray = institutes ? institutes.split(',').map(s => s.trim()) : [];
+
     const newPortfolio = new Portfolio({
       userId: req.session.userId,
       fullName,
-      contact,
+      email,
+      phone,
       bio,
       softSkills: softSkillsArray,
       technicalSkills: technicalSkillsArray,
-      institute,
+      institutes,
       degree,
       year: year ? Number(year) : null,
       grade,
@@ -204,7 +219,7 @@ app.post('/portfolio', upload.single('photo'), async (req, res) => {
     doc.moveDown(2);
     doc.fontSize(16).fillColor('#007AFF').text('Personal Information', { underline: true });
     doc.moveDown(1);
-    doc.fontSize(12).fillColor('#333').text(`Full Name: ${fullName}`, { continued: true }).text('    ', { continued: true }).text(`Contact: ${contact}`);
+    doc.fontSize(12).fillColor('#333').text(`Full Name: ${fullName}`, { continued: true }).text('    ', { continued: true }).text(`email: ${email}`,{ continued: true }).text('    ', { continued: true }).text(`phone: ${phone}`);
     doc.moveDown(0.5);
     doc.text(`Bio: ${bio}`);
     doc.moveDown(1);
@@ -224,11 +239,19 @@ app.post('/portfolio', upload.single('photo'), async (req, res) => {
     doc.moveDown(0.5);
     doc.text(`Technical Skills: ${technicalSkillsArray.join(', ')}`);
     doc.moveDown(1);
-    if (institute || degree || year || grade) {
+    if (institutesArray.length > 0 || degree || year || grade) {
       doc.fontSize(16).fillColor('#007AFF').text('Academic Background', { underline: true });
       doc.moveDown(0.5);
-      doc.fontSize(12).fillColor('#333').text(`Institute: ${institute}`).text(`Degree: ${degree}`).text(`Year: ${year || ''}`).text(`Grade: ${grade || ''}`);
-      doc.moveDown(1);
+      
+      if (institutesArray.length > 0) {
+        doc.fontSize(12).fillColor('#333')
+           .text(`Institutes: ${institutesArray.join(', ')}`);
+      }
+      
+      if (degree) doc.text(`Degree: ${degree}`);
+      if (year) doc.text(`Year: ${year}`);
+      if (grade) doc.text(`Grade: ${grade}`);
+      doc.moveDown();
     }
     doc.fontSize(16).fillColor('#007AFF').text('Work Experience', { underline: true });
     doc.moveDown(0.5);
