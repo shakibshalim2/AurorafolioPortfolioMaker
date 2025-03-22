@@ -209,8 +209,7 @@ app.post('/portfolio', upload.single('photo'), async (req, res) => {
     }
     
     await newPortfolio.save();
-    
-    // Generate the PDF after saving to database
+
     const doc = new PDFDocument({ size: 'A4', margins: { top: 50, bottom: 50, left: 50, right: 50 } });
     const chunks = [];
     doc.on('data', (chunk) => chunks.push(chunk));
@@ -221,8 +220,7 @@ app.post('/portfolio', upload.single('photo'), async (req, res) => {
       res.setHeader('Content-Length', pdfData.length);
       res.end(pdfData);
     });
-    
-    // Rest of PDF generation code remains the same
+
     doc.fontSize(10).fillColor('#888').text('Aurorafolio - Generated PDF', { align: 'right' });
     doc.strokeColor('#CCCCCC').lineWidth(1).moveTo(doc.x, doc.y + 10).lineTo(550, doc.y + 10).stroke();
     doc.moveDown(2);
