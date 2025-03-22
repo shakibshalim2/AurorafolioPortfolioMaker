@@ -28,10 +28,12 @@ const portfolioSchema = new mongoose.Schema({
   bio: String,
   softSkills: [String],
   technicalSkills: [String],
-  institute: String,
-  degree: String,
-  year: Number,
-  grade: String,
+  academicBackground: [{
+    institute: String,
+    degree: String,
+    year: Number,
+    grade: String
+  }],
   company: String,
   duration: String,
   responsibilities: String,
@@ -103,12 +105,12 @@ app.get('/currentUser', (req, res) => {
 app.post('/preview', upload.single('photo'), async (req, res) => {
   if (!req.session.userId) return res.redirect('/login');
   try {
-    const { fullName, email,phone, bio, softSkills, technicalSkills, institutes, degree, year, grade, company, duration, responsibilities, projects } = req.body;
+    const { fullName, email, phone, bio, softSkills, technicalSkills, company, duration, responsibilities, projects } = req.body;
     const softSkillsArray = softSkills ? softSkills.split(',').map(s => s.trim()) : [];
     const technicalSkillsArray = technicalSkills ? technicalSkills.split(',').map(s => s.trim()) : [];
-    const doc = new PDFDocument({ size: 'A4', margins: { top: 50, bottom: 50, left: 50, right: 50 } });
-    const institutesArray = institutes ? institutes.split(',').map(s => s.trim()) : [];
+    const academicBackground = JSON.parse(req.body.academicBackground || '[]');
 
+    const doc = new PDFDocument({ size: 'A4', margins: { top: 50, bottom: 50, left: 50, right: 50 } });
     const chunks = [];
     doc.on('data', chunk => chunks.push(chunk));
     doc.on('end', () => {
@@ -140,20 +142,19 @@ app.post('/preview', upload.single('photo'), async (req, res) => {
     doc.text(`Soft Skills: ${softSkillsArray.join(', ')}`);
     doc.text(`Technical Skills: ${technicalSkillsArray.join(', ')}`);
     doc.moveDown();
-    if (institutesArray.length > 0 || degree || year || grade) {
-      doc.fontSize(16).fillColor('#007AFF').text('Academic Background', { underline: true });
-      doc.moveDown(0.5);
-      
-      if (institutesArray.length > 0) {
-        doc.fontSize(12).fillColor('#333')
-           .text(`Institutes: ${institutesArray.join(', ')}`);
-      }
-      
-      if (degree) doc.text(`Degree: ${degree}`);
-      if (year) doc.text(`Year: ${year}`);
-      if (grade) doc.text(`Grade: ${grade}`);
-      doc.moveDown();
-    }
+   // Academic Background
+   if (academicBackground.length > 0) {
+    doc.fontSize(16).fillColor('#007AFF').text('Academic Background', { underline: true }).moveDown(0.5);
+    academicBackground.forEach(entry => {
+      doc.fontSize(12).fillColor('#333')
+        .text(`Institute: ${entry.institute || ''}`)
+        .text(`Degree: ${entry.degree || ''}`)
+        .text(`Year: ${entry.year || ''}`)
+        .text(`Grade: ${entry.grade || ''}`)
+        .moveDown();
+    });
+  }
+
     doc.text('Work Experience:', { underline: true });
     doc.text(`Company: ${company || ''}`);
     doc.text(`Duration: ${duration || ''}`);
@@ -174,10 +175,18 @@ app.post('/preview', upload.single('photo'), async (req, res) => {
 app.post('/portfolio', upload.single('photo'), async (req, res) => {
   if (!req.session.userId) return res.redirect('/login');
   try {
-    const { fullName, email,phone, bio, softSkills, technicalSkills, institutes, degree, year, grade, company, duration, responsibilities, projects } = req.body;
-    const softSkillsArray = softSkills.split(',').map(s => s.trim());
-    const technicalSkillsArray = technicalSkills.split(',').map(s => s.trim());
-    const institutesArray = institutes ? institutes.split(',').map(s => s.trim()) : [];
+    const { fullName, email, phone, bio, softSkills, technicalSkills, company, duration, responsibilities, projects } = req.body;
+    
+    // Parse the skills into arrays first
+    const softSkillsArray = softSkills ? softSkills.split(',').map(s => s.trim()) : [];
+    const technicalSkillsArray = technicalSkills ? technicalSkills.split(',').map(s => s.trim()) : [];
+    
+    const academicBackground = JSON.parse(req.body.academicBackground || '[]').map(entry => ({
+      institute: entry.institute,
+      degree: entry.degree,
+      year: entry.year ? parseInt(entry.year, 10) : null,
+      grade: entry.grade
+    }));
 
     const newPortfolio = new Portfolio({
       userId: req.session.userId,
@@ -187,20 +196,21 @@ app.post('/portfolio', upload.single('photo'), async (req, res) => {
       bio,
       softSkills: softSkillsArray,
       technicalSkills: technicalSkillsArray,
-      institutes,
-      degree,
-      year: year ? Number(year) : null,
-      grade,
+      academicBackground,
       company,
       duration,
       responsibilities,
       projects
     });
+    
     if (req.file) {
       newPortfolio.photo = req.file.buffer;
       newPortfolio.photoContentType = req.file.mimetype;
     }
+    
     await newPortfolio.save();
+    
+    // Generate the PDF after saving to database
     const doc = new PDFDocument({ size: 'A4', margins: { top: 50, bottom: 50, left: 50, right: 50 } });
     const chunks = [];
     doc.on('data', (chunk) => chunks.push(chunk));
@@ -211,6 +221,8 @@ app.post('/portfolio', upload.single('photo'), async (req, res) => {
       res.setHeader('Content-Length', pdfData.length);
       res.end(pdfData);
     });
+    
+    // Rest of PDF generation code remains the same
     doc.fontSize(10).fillColor('#888').text('Aurorafolio - Generated PDF', { align: 'right' });
     doc.strokeColor('#CCCCCC').lineWidth(1).moveTo(doc.x, doc.y + 10).lineTo(550, doc.y + 10).stroke();
     doc.moveDown(2);
@@ -239,20 +251,20 @@ app.post('/portfolio', upload.single('photo'), async (req, res) => {
     doc.moveDown(0.5);
     doc.text(`Technical Skills: ${technicalSkillsArray.join(', ')}`);
     doc.moveDown(1);
-    if (institutesArray.length > 0 || degree || year || grade) {
+
+    if (academicBackground.length > 0) {
       doc.fontSize(16).fillColor('#007AFF').text('Academic Background', { underline: true });
       doc.moveDown(0.5);
-      
-      if (institutesArray.length > 0) {
+      academicBackground.forEach(entry => {
         doc.fontSize(12).fillColor('#333')
-           .text(`Institutes: ${institutesArray.join(', ')}`);
-      }
-      
-      if (degree) doc.text(`Degree: ${degree}`);
-      if (year) doc.text(`Year: ${year}`);
-      if (grade) doc.text(`Grade: ${grade}`);
-      doc.moveDown();
+          .text(`Institute: ${entry.institute || ''}`)
+          .text(`Degree: ${entry.degree || ''}`)
+          .text(`Year: ${entry.year || ''}`)
+          .text(`Grade: ${entry.grade || ''}`)
+          .moveDown();
+      });
     }
+
     doc.fontSize(16).fillColor('#007AFF').text('Work Experience', { underline: true });
     doc.moveDown(0.5);
     doc.fontSize(12).fillColor('#333').text(`Company: ${company}`).text(`Duration: ${duration}`).text(`Responsibilities: ${responsibilities}`);
