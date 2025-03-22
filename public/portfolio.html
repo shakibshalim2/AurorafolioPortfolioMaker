@@ -64,22 +64,31 @@
         <div class="two-column">
           <fieldset>
             <legend>Academic Background (Optional)</legend>
-            <label for="instituteInput">Institute</label>
-            <div class="institute-input-container">
-              <input type="text" id="instituteInput" placeholder="Enter institute">
-              <button type="button" id="addInstituteBtn" class="plus-btn">+</button>
+            <div class="academic-entries">
+              <div class="academic-entry">
+                <div class="two-column">
+                  <div>
+                    <label>Institute</label>
+                    <input type="text" class="academic-institute" placeholder="Enter institute">
+                  </div>
+                  <div>
+                    <label>Degree</label>
+                    <input type="text" class="academic-degree" placeholder="Enter degree">
+                  </div>
+                  <div>
+                    <label>Year</label>
+                    <input type="number" class="academic-year" placeholder="Enter year">
+                  </div>
+                  <div>
+                    <label>Grade</label>
+                    <input type="text" class="academic-grade" placeholder="Enter grade">
+                  </div>
+                </div>
+                <button type="button" class="remove-academic-btn">−</button>
+              </div>
             </div>
-            <ul id="instituteList"></ul>
-            <input type="hidden" id="institutes" name="institutes">
-
-            <label for="degree">Degree</label>
-            <input type="text" id="degree" name="degree">
-
-            <label for="year">Year</label>
-            <input type="number" id="year" name="year">
-
-            <label for="grade">Grade</label>
-            <input type="text" id="grade" name="grade">
+            <button type="button" id="addAcademicBtn" class="plus-btn">+ Add Academic Entry</button>
+            <input type="hidden" id="academicBackground" name="academicBackground">
           </fieldset>
 
           <fieldset>
